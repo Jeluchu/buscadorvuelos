@@ -29,4 +29,9 @@ Partiendo del siguiente modelo relacional (incompleto, quizás) se requiere real
 
 En algunas funcionalidades como reservar un vuelo puede conllevar varias instrucciones para realizarlo (por ejemplo la reserva de ida y vuelta) pero en esos casos marcarlo como una transacción.
 
+## CÓDIGO IATA
+https://es.wikipedia.org/wiki/Anexo:Aeropuertos_seg%C3%BAn_el_c%C3%B3digo_IATA
+https://es.wikipedia.org/wiki/C%C3%B3digo_de_aeropuertos_de_IATA
 
+## GENERADOR DE NOMBRES, APELLIDOS, DNI, ETC
+https://www.proinf.net/clases/MS-Excel/avanzado2011/generador_nombres/javascript/generador.html

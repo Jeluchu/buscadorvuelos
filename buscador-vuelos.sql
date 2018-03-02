@@ -44,6 +44,7 @@ USE buscadorVuelos;
 
 	);
 	
+	
 	CREATE TABLE PASAJERO (
 	DNI CHAR(20),
 	Nombre VARCHAR(20),
@@ -53,6 +54,19 @@ USE buscadorVuelos;
 	PRIMARY KEY (Nombre,DNI,Libertad) 
 
 	);
+	
+	
+	CREATE TABLE EQUIPAJE (
+	CodMaleta char(20)
+	dimensiones float (4) 
+	peso float (4)
+	ubicacion ENUM ('bodega', 'cabina') NOT NULL,
+	PRIMARY KEY (CodMaleta), 
+	CONSTRAINT FK_MALETA FOREIGN KEY(CodMaleta) 
+	REFERENCES PASAJERO (DNI)	
+
+	);
+	
 
 	CREATE TABLE RESERVA (
 	Localizador VARCHAR(20) NOT NULL,

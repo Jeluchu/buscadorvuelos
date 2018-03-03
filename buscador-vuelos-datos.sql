@@ -12,9 +12,9 @@ USE buscadorVuelos;
 	);
 
 	CREATE TABLE TERMINAL (
-	Numero char(4) NOT NULL,
+	IDterminal char(2) NOT NULL,
 	CodIATA VARCHAR(30) NOT NULL,
-	CONSTRAINT PK_TERMINAL PRIMARY KEY (Numero,CodIATA)
+	CONSTRAINT PK_TERMINAL PRIMARY KEY (IDterminal,CodIATA)
 
 	);	
 
@@ -23,24 +23,42 @@ USE buscadorVuelos;
 	CodOACICompañia VARCHAR(30),
 	NombreAeropuertoOrigen VARCHAR (30),
 	CodIATAOrigen VARCHAR(30),
+	IDterminalOrigen VARCHAR (2),
 	NombreAeropuertoDestino VARCHAR (30),
 	CodIATADestino VARCHAR(30),
+	IDterminalDestino VARCHAR (2),
 	TerminalAeropuertoOrigen VARCHAR(30),
 	TerminalAeropuertoDestino VARCHAR(30),
 	Estado ENUM ('OnTime', 'Delayed', 'Advance'),
 	PRIMARY KEY (CodVuelo),
 	CONSTRAINT FK_ORIGEN FOREIGN KEY(CodIATAOrigen,NombreAeropuertoOrigen) 
 	REFERENCES AEROPUERTO (CodIATA,Nombre),
+	CONSTRAINT FK_TERMINALORIGEN FOREIGN KEY(IDterminalOrigen) 
+	REFERENCES TERMINAL (IDterminal),
 	CONSTRAINT FK_DESTINO FOREIGN KEY(CodIATADestino,NombreAeropuertoDestino) 
-	REFERENCES AEROPUERTO (CodIATA,Nombre)
+	REFERENCES AEROPUERTO (CodIATA,Nombre),
+	CONSTRAINT FK_TERMINALDESTINO FOREIGN KEY(IDterminalDestino) 
+	REFERENCES TERMINAL (IDterminal)		
 
 	);
+
 
 
 	CREATE TABLE ASIENTO (
 	CodAsiento char(20) NOT NULL,
 	TipoClase ENUM ('TURISTA', 'BUSSINESS', 'FIRST CLASS'),
 	PRIMARY KEY (CodAsiento,TipoClase) 
+
+	);
+	
+	CREATE TABLE EQUIPAJE (
+	CodMaleta char(20)
+	dimensiones float (4) 
+	peso float (4)
+	ubicacion ENUM ('bodega', 'cabina') NOT NULL,
+	PRIMARY KEY (CodMaleta), 
+	CONSTRAINT FK_MALETA FOREIGN KEY(CodMaleta) 
+	REFERENCES PASAJERO (DNI)	
 
 	);
 	

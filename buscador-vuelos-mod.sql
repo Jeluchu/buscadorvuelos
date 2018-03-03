@@ -4,42 +4,45 @@ USE buscadorVuelos;
 
 	CREATE TABLE AEROPUERTO (
 	CodIATA VARCHAR(30),
-	Nombre VARCHAR (30),
+	Nombre VARCHAR (50),
 	Ciudad VARCHAR (30), 
-	Pais VARCHAR(20),
+	Pais VARCHAR(50),
  	CONSTRAINT PK_AEROPUERTO PRIMARY KEY(CodIATA,Nombre)
 
 	);
 
 	CREATE TABLE TERMINAL (
-	Numero char(20) NOT NULL,
+	IDterminal char(2) NOT NULL,
 	CodIATA VARCHAR(30) NOT NULL,
-	CONSTRAINT PK_TERMINAL PRIMARY KEY (Numero,CodIATA)
+	CONSTRAINT PK_TERMINAL PRIMARY KEY (IDterminal,CodIATA)
 
 	);	
 
 	CREATE TABLE VUELO (
 	CodVuelo CHAR(10),
-	CodCompañia VARCHAR(30),
-	NombreAeropuertoOrigen VARCHAR (30),
+	CodOACICompañia VARCHAR(30),
+	NombreAeropuertoOrigen VARCHAR (50),
 	CodIATAOrigen VARCHAR(30),
+	IDterminalOrigen VARCHAR (2),
+	NombreAeropuertoDestino VARCHAR (50),
 	CodIATADestino VARCHAR(30),
-	NombreAeropuertoDestino VARCHAR (30),
-	TerminalAeropuertoOrigen VARCHAR(30),
-	TerminalAeropuertoDestino VARCHAR(30),
+	IDterminalDestino VARCHAR (2),
 	Estado ENUM ('OnTime', 'Delayed', 'Advance'),
 	PRIMARY KEY (CodVuelo),
 	CONSTRAINT FK_ORIGEN FOREIGN KEY(CodIATAOrigen,NombreAeropuertoOrigen) 
 	REFERENCES AEROPUERTO (CodIATA,Nombre),
+	CONSTRAINT FK_TERMINALORIGEN FOREIGN KEY(IDterminalOrigen) 
+	REFERENCES TERMINAL (IDterminal),
 	CONSTRAINT FK_DESTINO FOREIGN KEY(CodIATADestino,NombreAeropuertoDestino) 
-	REFERENCES AEROPUERTO (CodIATA,Nombre)
+	REFERENCES AEROPUERTO (CodIATA,Nombre),
+	CONSTRAINT FK_TERMINALDESTINO FOREIGN KEY(IDterminalDestino) 
+	REFERENCES TERMINAL (IDterminal)		
 
 	);
 
-
 	CREATE TABLE ASIENTO (
 	CodAsiento char(20) NOT NULL,
-	TipoClase VARCHAR(30),
+	TipoClase ENUM ('TURISTA', 'BUSSINESS', 'FIRST CLASS'),
 	PRIMARY KEY (CodAsiento,TipoClase) 
 
 	);
@@ -53,18 +56,19 @@ USE buscadorVuelos;
 	PRIMARY KEY (Nombre,DNI,Libertad) 
 
 	);
-
+	
+	
 	CREATE TABLE EQUIPAJE (
-	CodMaleta char(20)
-	dimensiones float (4) 
-	peso float (4)
+	CodMaleta CHAR(20),
+	dimensiones FLOAT (4) ,
+	peso FLOAT (4),
 	ubicacion ENUM ('BODEGA', 'CABINA') NOT NULL,
 	PRIMARY KEY (CodMaleta), 
 	CONSTRAINT FK_MALETA FOREIGN KEY(CodMaleta) 
 	REFERENCES PASAJERO (DNI)	
 
 	);
-	
+
 	CREATE TABLE RESERVA (
 	Localizador VARCHAR(20) NOT NULL,
 	DNI CHAR(30),
@@ -77,8 +81,9 @@ USE buscadorVuelos;
 	Nombre VARCHAR(30),
 	DNI CHAR(9),
 	libre ENUM ('SI','NO')
-	);
+);
 
+/* MODIFICACIONES */
 ALTER TABLE AEROPUERTO DROP Pais;
 ALTER TABLE AEROPUERTO ADD Continente VARCHAR(20);
 ALTER TABLE VUELO MODIFY CodVuelo INT AUTO_INCREMENT;
@@ -96,7 +101,3 @@ DESC PASAJERO;
 DESC EQUIPAJE;
 DESC RESERVA;
 DESC PENAL;
-
-
-
-
